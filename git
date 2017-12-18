@@ -113,7 +113,7 @@
 
   用git diff HEAD -- readme.txt命令可以查看工作区和版本库里面最新版本的区别
 
-————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+——————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 撤销修改
 
@@ -125,7 +125,7 @@
 
  已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库
 
-—————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+———————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 删除文件
 
@@ -203,3 +203,37 @@
 
    git push github master  推送到github
    git push gitee master   推送到gitee
+
+   注意：出现版本重复，即如下错误，可以使用 git push github master -f 来覆盖  但是之前的会丢失 慎用
+   $ git push -u github master
+   Enter passphrase for key '/c/Users/Administrator/.ssh/id_rsa':
+   To github.com:PsychoY/learngit.git
+   ! [rejected]        master -> master (non-fast-forward)
+   error: failed to push some refs to 'git@github.com:PsychoY/learngit.git'
+   hint: Updates were rejected because the tip of your current branch is behind
+   hint: its remote counterpart. Integrate the remote changes (e.g.
+   hint: 'git pull ...') before pushing again.
+   hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+克隆远程库
+
+ $ git clone git@github.com:michaelliao/gitskills.git
+ Cloning into 'gitskills'...
+ remote: Counting objects: 3, done.
+ remote: Total 3 (delta 0), reused 0 (delta 0)
+ Receiving objects: 100% (3/3), done.
+
+ $ cd gitskills
+ $ ls
+ README.md
+
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+分支管理
+
+ 创建和合并分支
+
+
+
