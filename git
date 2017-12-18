@@ -142,7 +142,64 @@
 
 添加远程库
 
+ 添加本地SSH pubKey到github
+
+  1 - $ cd ~/.ssh  查看本机是否有ssh key设置 有则进入 .ssh文件 ls看下内容 已存在id_rsa 和 id_rsa.pub，则可以rm * 删除
+
+  2 - $ cd ~  保证在~家目录下
+
+  3 - $ ssh-keygen -t rsa -C "xxxxxx@yy.com"  生成ssh key
+  Generating public/private rsa key pair.
+  Enter file in which to save the key (/c/Users/xxxx_000/.ssh/id_rsa):   #不填直接回车
+  Enter passphrase (empty for no passphrase):   #输入密码（可以为空）
+  Enter same passphrase again:   #再次确认密码（可以为空）
+  Your identification has been saved in /c/Users/xxxx_000/.ssh/id_rsa.   #生成的密钥
+  Your public key has been saved in /c/Users/xxxx_000/.ssh/id_rsa.pub.  #生成的公钥
+  The key fingerprint is:
+  e3:51:33:xx:xx:xx:xx:xxx:61:28:83:e2:81 xxxxxx@yy.com
+
+  *本机已完成ssh key设置，其存放路径为：c:/Users/xxxx_000/.ssh/下。
+  注释：可生成ssh key自定义名称的密钥，默认id_rsa。
+  $ ssh-keygen -t rsa -C "邮箱地址" -f ~/.ssh/githug_blog_keys 
+  #生成ssh key的名称为githug_blog_keys，慎用容易出现其它异常。
+
+  4 - 添加ssh key到github --> 复制pub 公钥到github
+
+  5 - 测试ssh key是否添加成功  
+  $ ssh -T git@github.com
+  The authenticity of host 'github.com (192.30.252.129)' can't be established.
+  RSA key fingerprint is 16:27:xx:xx:xx:xx:xx:4d:eb:df:a6:48.
+  Are you sure you want to continue connecting (yes/no)? yes #确认你是否继续联系，输入yes
+  Warning: Permanently added 'github.com,192.30.252.129' (RSA) to the list of known hosts.
+  Enter passphrase for key '/c/Users/xxxx_000/.ssh/id_rsa':  
+  #生成ssh kye是密码为空则无此项，若设置有密码则有此项且，输入生成ssh key时设置的密码即可。
+  Hi xxx! You've successfully authenticated, but GitHub does not provide shell access. #出现词句话，说明设置成功。
+
+
  本地仓库推送到GitHub仓库
-  $ git remote add origin git@github.com:michaelliao/learngit.git
-  michaelliao替换成你自己的GitHub账户名  
+
+  $ git remote add origin git@server-name:path/repo-name.git
   添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。
+  关联后，使用命令git push -u origin master第一次推送master分支的所有内容
+  此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改
+  
+  题外话：由于远程库的名字都是origin，如果我即用github 也用gitee，两个远程库不能都叫origin怎么办
+   git remote -v
+   origin    git@github.com:michaelliao/learngit.git (fetch)
+   origin    git@github.com:michaelliao/learngit.git (push)
+   查看远程库信息，关联origin的远程库指向github
+
+   git remote rm origin  可以先删除名为origin的远程库
+
+   git remote add github git@github.com:michaelliao/learngit.git  关联github，命名就叫github
+   git remote add gitee git@gitee.com:liaoxuefeng/learngit.git 关联gitee，命名就叫gitee
+
+   git remote -v
+   gitee    git@gitee.com:liaoxuefeng/learngit.git (fetch)
+   gitee    git@gitee.com:liaoxuefeng/learngit.git (push)
+   github    git@github.com:michaelliao/learngit.git (fetch)
+   github    git@github.com:michaelliao/learngit.git (push)
+   两个远程库
+
+   git push github master  推送到github
+   git push gitee master   推送到gitee
